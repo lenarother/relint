@@ -35,7 +35,22 @@ any regular expression. The linter does lint entire files, therefore
 your expressions can match multiple lines and include newlines.
 
 You can narrow down the file types your linter should be working with,
-by providing the optional `filePattern` attribute. The default is `.*`.
+by providing the optional `filePattern` attribute. You can also list your target files using
+[Unix shell-style wildcards](https://docs.python.org/3.10/library/fnmatch.html),
+in this case use `filename` attribute, this notation allows listing several files. e.g.
+
+```yaml
+- name: model_bakery recipies
+  pattern: 'baker\\.make\\('
+  hint: Please use baker.make_recipe instead of baker.make.
+  filename:
+    - '**/test_*.py'
+    - 'conftest.py'
+    - '**/conftest.py'
+  error: false
+```
+
+If you choose not to use `filePattern` and  `filename`, the default is `.*`.
 
 The optional `error` attribute allows you to only show a warning but not
 exit with a bad (non-zero) exit code. The default is `true`.
